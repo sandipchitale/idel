@@ -1,0 +1,86 @@
+<div class="wrapper">
+  <p-toolbar>
+    <div class="p-toolbar-group-left" style="flex: 1 1 auto">
+      <b>@ng-idle/core demo</b>
+    </div>
+    <div class="p-toolbar-group-right" style="flex: 0 0 auto">
+      <button pButton class="ml-2" (click)="watch()">Restart demo</button>
+      <p-toggleButton
+        [(ngModel)]="lightTheme"
+        [onIcon]="'pi pi-sun'"
+        [offIcon]="'pi pi-moon'"
+        class="ml-2"
+        (onChange)="adjustTheme($event)"
+      >
+      </p-toggleButton>
+    </div>
+  </p-toolbar>
+  <main>
+    <table>
+      <tr>
+        <td>Idle after:</td>
+        <td>
+          <input
+            pInputText
+            type="number"
+            min="2"
+            max="2400"
+            [(ngModel)]="idleAfterSeconds"
+          />
+          seconds
+        </td>
+      </tr>
+      <tr>
+        <td class="text-2xl">State:</td>
+        <td
+          [ngClass]="{
+            'text-green-500': state === STATE.NOT_IDLE,
+            'text-orange-500': state === STATE.IDLE,
+            'text-red-500': state === STATE.TIMED_OUT,
+            'text-2xl': true
+          }"
+        >
+          {{ idleState }}
+        </td>
+      </tr>
+      <tr>
+        <td>Timeout after:</td>
+        <td>
+          <input
+            pInputText
+            type="number"
+            min="6"
+            max="2400"
+            [(ngModel)]="timeoutAfterSeconds"
+          />
+          seconds
+        </td>
+      </tr>
+      <tr>
+        <td class="text-2xl">Countdown to timeout:</td>
+        <td class="text-orange-500 text-2xl">{{ countdown }}</td>
+      </tr>
+      <tr>
+        <td>Timeout warning seconds:</td>
+        <td>
+          <input
+            pInputText
+            type="number"
+            min="6"
+            max="2400"
+            [(ngModel)]="timeoutWarningSeconds"
+          />
+          seconds
+        </td>
+      </tr>
+    </table>
+  </main>
+</div>
+<p-dialog
+  header="{{ timeoutWarningSeconds }} second Timeout Warning Countdown"
+  [(visible)]="countdownDialogVisible"
+>
+  <div class="text-center">
+    <b class="text-orange-500 text-5xl">{{ countdown }}</b>
+  </div>
+</p-dialog>
